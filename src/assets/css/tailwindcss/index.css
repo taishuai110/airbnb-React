@@ -1,0 +1,5 @@
+/* base有tailwindcss自带的默认样式 */
+
+/* @tailwind base; */
+@tailwind components;
+@tailwind utilities;
