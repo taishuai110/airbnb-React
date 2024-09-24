@@ -4,11 +4,11 @@ import { ItemWrapper } from './style';
 import Rating from '@mui/material/Rating';
 
 const RoomItem = memo((props) => {
-    const { itemData } = props;
+    const { itemData, itemWidth = "25%" } = props;
 
     return (
         // verifColor是把服务器的css样式传递过去
-        <ItemWrapper verifycolor={itemData.verify_info.text_color || "#39576a"} className="w-1/4 p-2 box-border">
+        <ItemWrapper $itemwidth={ itemWidth } $verifycolor={itemData.verify_info.text_color || "#39576a"} className="p-2 box-border">
             <div className='inner w-full'>
                 <div className="cover relative box-border rounded overflow-hidden">
                     <img className='absolute left-0 top-0 w-full h-full' src={itemData.picture_url} alt="" />
@@ -48,7 +48,8 @@ const RoomItem = memo((props) => {
 })
 
 RoomItem.propTypes = {
-    itemData: PropTypes.object
+    itemData: PropTypes.object,
+    itemWidth: PropTypes.string
 }
 
 export default RoomItem

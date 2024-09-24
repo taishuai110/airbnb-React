@@ -1,20 +1,60 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { getHomeGoodPriceData } from "@/api";
+import { 
+    getHomeGoodPriceData, 
+    getHomeHighScoreData, 
+    getHomeDiscountData, 
+    getHomeHotRecommendData,
+    getHomeLongforData
+} from "@/api/modules/home";
 
-export const fetchHomeDataAction = createAsyncThunk("fetchdata", async () => {
-    const res = await getHomeGoodPriceData();
+export const fetchHomeDataAction = createAsyncThunk("fetchdata", (_, { dispatch }) => {
+    // 发送网络请求 这里不使用async/await，是因为下面请求不需要等上一个请求完才执行的
+    getHomeGoodPriceData().then(res => {
+        // 把数据派发到createSlice函数里
+        dispatch(changeGoodPriceInfoAction(res));
+    })
 
-    return res;
+    getHomeHighScoreData().then(res => {
+        dispatch(changeHighScoreInfoAction(res));
+    })
+
+    getHomeDiscountData().then(res => {
+        dispatch(changeDiscountInfoAction(res));
+    })
+
+    getHomeHotRecommendData().then(res => {
+        dispatch(changeRecommendInfoAction(res));
+    })
+    getHomeLongforData().then(res => {
+        dispatch(changeLongforInfoAction(res));
+    })
 })
 
 const homeSlice = createSlice({
     name: "home",
     initialState: {
-        goodPriceInfo: {}
+        goodPriceInfo: {},
+        highScoreInfo: {},
+        discountInfo: {},
+        recommendInfo: {},
+        longforInfo: {}
     },
-    reducers: { 
+    reducers: {
+        // 接收createAsyncThunk派发的数据
         changeGoodPriceInfoAction(state, { payload }) {
             state.goodPriceInfo = payload;
+        },
+        changeHighScoreInfoAction(state, { payload }) {
+            state.highScoreInfo = payload;
+        },
+        changeDiscountInfoAction(state, { payload }) {
+            state.discountInfo = payload;
+        },
+        changeRecommendInfoAction(state, { payload }) {
+            state.recommendInfo = payload
+        },
+        changeLongforInfoAction(state, { payload }) {
+            state.longforInfo = payload
         }
     },
 
@@ -26,6 +66,13 @@ const homeSlice = createSlice({
     }
 })
 
-export const { changeGoodPriceInfoAction } = homeSlice.actions;
+// 还要在这里定义让上面的createAsyncThunk能使用
+export const {
+    changeGoodPriceInfoAction,
+    changeHighScoreInfoAction,
+    changeDiscountInfoAction,
+    changeRecommendInfoAction,
+    changeLongforInfoAction
+} = homeSlice.actions;
 
 export default homeSlice.reducer

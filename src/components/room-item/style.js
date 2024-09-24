@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const ItemWrapper = styled.div`
+    width: ${ props => props.$itemwidth };
 
     .cover {
         padding: 66.66% 8px 0;
@@ -8,7 +9,7 @@ export const ItemWrapper = styled.div`
 
     .desc {
         /* 接收数据 */
-        color: ${props => props.verifycolor} ;
+        color: ${props => props.$verifycolor} ;
     }
 
     .name {
