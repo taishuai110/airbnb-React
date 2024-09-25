@@ -1,16 +1,16 @@
 import React, { memo, useEffect } from 'react'
 import { HomeWrapper } from './style';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 
 import HomeBanner from './c-cpns/home-banner';
 import { fetchHomeDataAction } from '@/store/modules/home';
-import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import HomeSectionV1 from './c-cpns/home-section-v1';
 import HomeSectionV2 from './c-cpns/home-section-v2';
 import { isEmptyObject } from '@/utlis';
 import HomeLongfor from './c-cpns/home-longfor';
+import HomeSectionV3 from './c-cpns/home-section-v3';
 
 const Home = memo(() => {
-
 
   // 从redux中获取数据
   const { 
@@ -18,14 +18,16 @@ const Home = memo(() => {
     highScoreInfo = {}, 
     discountInfo = {}, 
     recommendInfo = {},
-    longforInfo = {} 
+    longforInfo = {},
+    plusInfo = {}
   } = useSelector((state) => ({
     // 赋值给redux仓库
     goodPriceInfo: state.home.goodPriceInfo,
     highScoreInfo: state.home.highScoreInfo,
     discountInfo: state.home.discountInfo,
     recommendInfo: state.home.recommendInfo,
-    longforInfo: state.home.longforInfo
+    longforInfo: state.home.longforInfo,
+    plusInfo: state.home.plusInfo
   }), shallowEqual)
 
   // 发起网络请求
@@ -50,6 +52,7 @@ const Home = memo(() => {
         {/* 主要优化问题，因为组件默认渲染两次，都来确定是否有数据，这样写的话，就会有数据时才会渲染，没数据就不会渲染页面，从而性能优化 */}
         { isEmptyObject(goodPriceInfo) && <HomeSectionV1 infoData={goodPriceInfo}></HomeSectionV1> }
         { isEmptyObject(highScoreInfo) && <HomeSectionV1 infoData={highScoreInfo}></HomeSectionV1> }
+        { isEmptyObject(plusInfo) && <HomeSectionV3 infoData={plusInfo}></HomeSectionV3> }
       </div>
     </HomeWrapper>
   )

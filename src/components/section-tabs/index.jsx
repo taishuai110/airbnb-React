@@ -11,10 +11,6 @@ const SectionTabs = memo((props) => {
     // 记录索引值
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    tabNames.push("abc")
-    tabNames.push("efg")
-    tabNames.push("obq")
-
     const itemClickHandle = (index, item) => {
         // 把点击到的索引值保存
         setCurrentIndex(index);
