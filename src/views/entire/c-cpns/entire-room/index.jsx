@@ -1,8 +1,10 @@
 import PropTypes from 'prop-types'
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
 import { RoomsWrapper } from './style'
-import { shallowEqual, useSelector } from 'react-redux';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
 import RoomItem from '@/components/room-item';
+import { useNavigate } from 'react-router-dom';
+import { changeDetailInfoAction } from '../../../../store/modules/detail';
 
 const EntireRoom = memo((props) => {
   const {
@@ -16,20 +18,36 @@ const EntireRoom = memo((props) => {
     isLoading: state.entire.isLoading
   }), shallowEqual)
 
+  // 事件处理
+  
+  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const itemClickHandle = useCallback((item) => {
+    // 先在栏目页中选中商品，然后把那个商品数据存储在redux中，再跳转到商品详情页
+    dispatch(changeDetailInfoAction(item));
+    // 跳转详情
+      navigate("/detail");
+  }, [navigate])
+
   return (
     <RoomsWrapper>
-      <h2 className="title">共{ totalCount }多处住所</h2>
+      <h2 className="title">共{totalCount}多处住所</h2>
       <div className="list">
         {
           roomList.map(item => {
             return (
-              <RoomItem itemData={item} itemWidth="20%" key={item._id}></RoomItem>
+              <RoomItem
+                itemData={item}
+                itemWidth="20%"
+                key={item._id}
+                itemClick={ itemClickHandle }
+              ></RoomItem>
             )
           })
         }
       </div>
 
-        {/* 蒙版 */}
+      {/* 蒙版 */}
       {
         isLoading && <div className="cover"></div>
       }
