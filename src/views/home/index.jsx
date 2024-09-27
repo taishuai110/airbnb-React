@@ -9,6 +9,8 @@ import HomeSectionV2 from './c-cpns/home-section-v2';
 import { isEmptyObject } from '@/utlis';
 import HomeLongfor from './c-cpns/home-longfor';
 import HomeSectionV3 from './c-cpns/home-section-v3';
+import AppHeader from '@/components/app-header'
+import { changeHeaderConfigAction } from '@/store/modules/main';
 
 const Home = memo(() => {
 
@@ -36,10 +38,12 @@ const Home = memo(() => {
   // 只发动一次
   useEffect(() => {
     dispatch(fetchHomeDataAction());
+    dispatch(changeHeaderConfigAction({ isFixed: true, topAlpha: true }))
   }, [dispatch])
 
   return (
     <HomeWrapper>
+      <AppHeader></AppHeader>
       <HomeBanner></HomeBanner>
       
       <div className="content">

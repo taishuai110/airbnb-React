@@ -1,17 +1,22 @@
 import React, { memo, useEffect } from 'react'
-import { useSelector, shallowEqual } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 import DetailInfos from './c-cpns/detail-infos';
 import DetailPictures from './c-cpns/detail-pictures';
 import { DetailWrapper } from './style';
+import AppHeader from '@/components/app-header'
+import { changeHeaderConfigAction } from '@/store/modules/main';
 
 const Detail = memo(() => {
-  const { detailInfo = {} } = useSelector((state) => ({
-    detailInfo: state.detail.detailInfo
-  }), shallowEqual)
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(changeHeaderConfigAction({ isFixed: false, topAlpha: false }))
+  }, [dispatch])
 
   return (
     <DetailWrapper>
+      <AppHeader></AppHeader>
       <DetailInfos></DetailInfos>
       <DetailPictures></DetailPictures>
     </DetailWrapper>

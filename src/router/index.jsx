@@ -1,6 +1,10 @@
 import { lazy } from "react";
 import { Navigate } from 'react-router-dom';
+// import Home from '@/views/home';
 
+/* 
+    注意：懒加载-异步加载会有可能造成react打印数据两次
+*/
 const Home = lazy(() => import("@/views/home/index.jsx"));
 const Entire = lazy(() => import("@/views/entire/index.jsx"));
 const Detail = lazy(() => import("@/views/detail/index.jsx"));

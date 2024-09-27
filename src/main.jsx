@@ -14,13 +14,13 @@ import store from './store';
 
 
 createRoot(document.getElementById('root')).render(
-  <Suspense fallback="loading">
-    <Provider store={store}>
+  <Provider store={store}>
+    <Suspense fallback="loading">
       <HashRouter>
         <ConfigProvider locale={zhch}>
           <App />
         </ConfigProvider>
       </HashRouter>
-    </Provider>
-  </Suspense>
+    </Suspense>
+  </Provider>
 )
