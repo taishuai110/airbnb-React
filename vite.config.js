@@ -37,9 +37,9 @@ export default ({ mode }) => {
 
     // 解决路由跨域问题
     server: {
-      host: "127.0.0.1", // 本地地址
+      host: env.VITE_API_HOST, // 本地地址
       open: false, // 是否自动启动浏览器
-      port: 5149, // 端口号
+      port: env.VITE_API_PORT, // 端口号
       // 跨域配置
       proxy: {
         '/api': {
